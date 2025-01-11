@@ -4,23 +4,24 @@ import Users from '../assets/sidebar/users.svg'
 import Tickets from '../assets/sidebar/tickets.svg'
 import Officials from '../assets/sidebar/officials.svg'
 import Settings from '../assets/sidebar/settings.svg'
+import { Link } from 'react-router-dom'
 
 
 export default function Sidebar() {
   return (
     <nav className="sidebar">
       <h1 className="sidebar__title">
-        Tech Ticketing
+        Ticketing
       </h1>
       <div className="sidebar__options">
-        <div className="sidebar__option">
+        <Link to="/" className="sidebar__option">
           <div className="sidebar__option__logo-wrapper">
             <img src={Dashboard} alt="" className="sidebar__logo" />
           </div>
           <h3 className="sidebar__option-title">
             Dashboard
           </h3>
-        </div>
+        </Link>
         <div className="sidebar__option">
           <div className="sidebar__option__logo-wrapper">
             <img src={Users} alt="" className="sidebar__logo" />

@@ -1,20 +1,32 @@
 import React from 'react'
 import Profile from '../../assets/topbar/profile.jpg'
 
-export default function({ color }) {
+export default function ({ ticket }) {
+
+  const timestamp = ticket.createdAt;
+  const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
+  const options = {
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  };
+  const formattedDate = date.toLocaleString('en-US', options); // Format the date
+
   return (
     <div className='ticket'>
       <div className="ticket-header">
         <div className="ticket-info">
           <div className="ticket-condition"></div>
-          <div className="ticket-info-text">Ticket #123</div>
+          <div className="ticket-info-text">Ticket #{ticket.id}</div>
         </div>
-        <span className="ticket-date">Posted at 11:55 PM</span>
+        <span className="ticket-date">Posted {formattedDate} </span>
       </div>
 
       <div className="ticket-main">
         <h3 className="ticket-title">Fix Cart #54</h3>
-        <p className="ticket-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint reprehenderit molestias dolor ad eum itaque fugiat nostrum amet, doloremque suscipit minima soluta omnis modi sed, tempore provident cumque. Cum, obcaecati?</p>
+        <p className="ticket-description">{ticket.description}</p>
       </div>
 
       <div className="ticket-user-info">

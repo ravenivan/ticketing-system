@@ -63,6 +63,7 @@ body {
     gap: 10px;
     padding: 12px 30px;
     align-items: center;
+    text-decoration: none;
 }
 
 .sidebar__option:hover {
@@ -202,6 +203,7 @@ body {
     border: none;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
 }
 
 .newTicket__text {
@@ -374,6 +376,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    
 }
 
 .newTicket-input:nth-child(3n) {
@@ -391,7 +394,7 @@ body {
     width: 100%;
     border: 1px solid #E7E7E7;
     font-size: 14px;
-
+    height: 34px;
 }
 
 .newTicket-description {
@@ -413,6 +416,7 @@ body {
     height: 120px;
     border: 1px solid #E7E7E7;
     resize: none;
+    font-size: "Montserrat", sans-serif;
 }
 
 .newTicket-description-field::placeholder {
@@ -430,4 +434,5 @@ body {
     color: #FFF;
     border: none;
     margin-left: auto;
+    cursor: pointer
 }

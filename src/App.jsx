@@ -6,18 +6,24 @@ import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
 import Dashboard from './components/Dashboard'
 import TicketScreen from './components/TicketScreen'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
 
 
   return (
-    <div className='app'>
-      <Sidebar />
-      <div className="app-column">
-        <Topbar />
-        <TicketScreen />
+    <Router>
+      <div className='app'>
+        <Sidebar />
+        <div className="app-column">
+          <Topbar />
+          <Routes>
+            <Route path='/' element={<Dashboard />} />
+            <Route path='/new-ticket' element={<TicketScreen />} />
+          </Routes>  
+        </div>
       </div>
-    </div>
+    </Router>
   )
 }
 

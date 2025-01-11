@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { collection, addDoc } from "firebase/firestore";
+import React, { useEffect, useState } from 'react'
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from '../firebase';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { use } from 'react';
 
 export default function TicketScreen() {
@@ -13,25 +13,40 @@ export default function TicketScreen() {
     roomNumber: '',
     numbersAffected: '',
     dateNoticed: '',
-    description: ''
+    description: '',
+    createdAt: serverTimestamp()
   })
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
+  useEffect(() => {
+    console.log(formData.dateNoticed) 
+  }, [formData.dateNoticed])
+
   async function createTicket() {
+
+    console.log('asd')
+
+    if (formData.mainCategory === 'Default' || formData.affected === 'Default' || formData.privilege === 'Default' || formData.roomNumber === '' || formData.numbersAffected === '' || formData.dateNoticed === '' || formData.description === '') {
+      toast.error('Error creating ticket (fill out all fields)');
+      console.log("asd")
+      return;
+    }
     try {
       const docRef = await addDoc(collection(db, "tickets"), formData);
       console.log("Document written with ID: ", docRef.id);
+      toast.success("Ticket created successfully");
     } catch (e) {
       console.error("Error adding document: ", e);
-      toast.error('Error creating ticket (fill out all fields)');
+      toast.error("Error creating ticket", e);
     }
   }
 
   return (
     <div className="newTicket-screen">
+      <Toaster />
       <h1 className="newTicket__title">New Ticket</h1>
 
       <div className="newTicket-card">
@@ -112,7 +127,7 @@ export default function TicketScreen() {
             <h5 className="newTicket-input-title">Date you first noticed the issue</h5>
             <input
               placeholder='MM - DD - YY'
-              type="text"
+              type="date"
               className="newTicket-input-field"
               onChange={(e) => handleChange('dateNoticed', e.target.value)}
             />
@@ -128,7 +143,7 @@ export default function TicketScreen() {
           ></textarea>
         </div>
 
-        <button className="newTicket-submit" onClick={createTicket}>
+        <button className="newTicket-submit" onClick={() => createTicket()}>
           Send Ticket
         </button>
       </div>
