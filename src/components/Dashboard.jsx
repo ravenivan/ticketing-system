@@ -7,7 +7,7 @@ import NewTickets from '../assets/dashboard/new-tickets.svg'
 import OngoingTickets from '../assets/dashboard/ongoing-tickets.svg'
 import ResolvedTickets from '../assets/dashboard/resolved-tickets.svg'
 import TicketCard from './ui/TicketCard'
-import { fetchTickets } from '../firestoreServices'
+import { fetchTickets, resetPagnitionState } from '../firestoreServices'
 import { Link } from 'react-router-dom'
 
 export default function () {
@@ -19,6 +19,7 @@ export default function () {
   const loadTickets = async () => {
     try {
       const fetchedTickets = await fetchTickets(pageSize);
+      console.log(fetchedTickets)
       setTickets(fetchedTickets);
 
     } catch (error) {
@@ -29,6 +30,10 @@ export default function () {
   useEffect(() => {
     loadTickets();
     console.log(Array.isArray(tickets))
+  }, [page])
+
+  useEffect(() => {
+    resetPagnitionState();
   }, [location.pathname])
 
   useEffect(() => {
@@ -83,6 +88,12 @@ export default function () {
               No tickets available
             </div>
           )}
+        </div>
+
+        <div className="dashboard-pagnition">
+          <button className="dashboard-pagnition__button">Previous</button>
+          <span className="dashboard-pagnition__page">Page {page}</span>
+          <button className="dashboard-pagnition__button">Next</button>
         </div>
       </div>
     </div>

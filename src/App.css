@@ -67,7 +67,7 @@ body {
 }
 
 .sidebar__option:hover {
-    background-color: rgba(127,86,216, 0.10)
+    background-color: rgba(127, 86, 216, 0.10)
 }
 
 .sidebar__option:hover .sidebar__option-title {
@@ -222,12 +222,36 @@ body {
 }
 
 .dashboard-option {
-    padding: 10px 0;    
+    padding: 10px 0;
     display: flex;
     align-items: center;
     gap: 10px;
     color: var(--gray-text);
     font-size: 14px;
+}
+
+.dashboard-pagnition {
+    display: flex;
+    gap: 30px;
+    justify-content: end;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.dashboard-pagnition__button {
+    background-color: var(--theme-color);
+    border-radius: 4px;
+    height: 36px;
+    padding: 10px 20px;
+    align-items: center;
+    border: none;
+    color: #FFF;
+}
+
+.dashboard-pagnition__page {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-text);
 }
 
 /* Ticket Card */
@@ -376,7 +400,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    
+
 }
 
 .newTicket-input:nth-child(3n) {
@@ -389,7 +413,8 @@ body {
     font-weight: 500;
 }
 
-.newTicket-input-field, .newTicket-select {
+.newTicket-input-field,
+.newTicket-select {
     padding: 8px 10px;
     width: 100%;
     border: 1px solid #E7E7E7;
@@ -435,4 +460,262 @@ body {
     border: none;
     margin-left: auto;
     cursor: pointer
+}
+
+/* Login modal */
+.loginModal-screen {
+    position: fixed;
+    background-color: rgba(10, 13, 18, 0.70);
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.loginModal {
+    position: relative;
+    display: flex;
+    padding: 24px;
+    width: 400px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    background: #FFF;
+    box-shadow: 0px 20px 24px -4px rgba(10, 13, 18, 0.10), 0px 8px 8px -4px rgba(10, 13, 18, 0.04);
+}
+
+.loginModal__icon-wrapper {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border: 1px solid #EAECF0;
+}
+
+.loginModal__icon {
+    width: 100%;
+    height: 100%;
+}
+
+.loginModal-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    margin-top: 16px;
+    gap: 4px;
+}
+
+.loginModal__title {
+    color: var(--Gray-900, #181D27);
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    align-self: stretch;
+}
+
+.loginModal__subtitle {
+    color: var(--Gray-600, #535862);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.loginModal__form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.loginModal__input {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.loginModal__input__title {
+    color: #414651;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.loginModal__input__field {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #D5D7DA;
+    width: 100%;
+}
+
+.loginModal__button-confirm {
+    width: 100%;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--theme-color);
+    background-color: var(--theme-color);
+    box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+    color: #FFF;
+    margin-top: 16px;
+}
+
+.loginModal__button-cancel {
+    width: 100%;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #D5D7DA;
+    background: #FFF;
+    box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+    margin-top: 4px;
+}
+
+.loginModal__x-button-wrapper {
+    position: absolute;
+    top: 26px;
+    right: 26px;
+    cursor: pointer;
+}
+
+/* Signup page */
+.signupModal-screen {
+    position: fixed;
+    background-color: rgba(10, 13, 18, 0.70);
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.signupModal {
+    position: relative;
+    display: flex;
+    padding: 24px;
+    width: 400px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 12px;
+    background: #FFF;
+    box-shadow: 0px 20px 24px -4px rgba(10, 13, 18, 0.10), 0px 8px 8px -4px rgba(10, 13, 18, 0.04);
+}
+
+.signupModal__icon-wrapper {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border: 1px solid #EAECF0;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.signupModal__icon {
+    width: 100%;
+    height: 100%;
+}
+
+.signupModal-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-top: 16px;
+}
+
+.signupModal__title {
+    color: #181D27;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.signupModal__subtitle {
+    color: #535862;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.signupModal__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.signupModal__input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+}
+
+.signupModal__input__title {
+    color: #414651;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.signupModal__input__field {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #D5D7DA;
+    width: 100%;
+    box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+}
+
+.signupModal__input__password-req {
+    color: #535862;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.signupModal__button-confirm {
+    width: 100%;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--theme-color);
+    background-color: var(--theme-color);
+    box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+    color: #FFF;
+    margin-top: 16px;
+}
+
+.signupModal__button-cancel {
+    width: 100%;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #D5D7DA;
+    background: #FFF;
+    box-shadow: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+    margin-top: 8px;
+}
+
+.signupModal__x-button-wrapper {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    cursor: pointer;
 }

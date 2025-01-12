@@ -29,3 +29,7 @@ export const fetchTickets = async (pageSize) => {
     throw error;
   }
 }
+
+export const resetPagnitionState = () => {
+  lastVisible = null
+}

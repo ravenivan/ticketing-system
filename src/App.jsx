@@ -7,6 +7,8 @@ import Topbar from './components/Topbar'
 import Dashboard from './components/Dashboard'
 import TicketScreen from './components/TicketScreen'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import LoginModal from './components/modals/LoginModal'
+import SignupModal from './components/modals/SignupModal'
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
             <Route path='/new-ticket' element={<TicketScreen />} />
           </Routes>  
         </div>
+        {/* <LoginModal /> */}
+        {/* <SignupModal /> */}
       </div>
     </Router>
   )
