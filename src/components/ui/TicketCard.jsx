@@ -25,7 +25,7 @@ export default function ({ ticket }) {
       </div>
 
       <div className="ticket-main">
-        <h3 className="ticket-title">Fix Cart #54</h3>
+        <h3 className="ticket-title">{ticket.mainCategory}</h3>
         <p className="ticket-description">{ticket.description}</p>
       </div>
 

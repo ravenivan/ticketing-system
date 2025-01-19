@@ -9,25 +9,33 @@ import TicketScreen from './components/TicketScreen'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LoginModal from './components/modals/LoginModal'
 import SignupModal from './components/modals/SignupModal'
+import { AppContext } from './AppContext'
+import TicketInfo from './components/TicketInfo'
 
 function App() {
 
+  const [user, setUser] = useState(null)
+  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showSignupModal, setShowSignupModal] = useState(false)
 
   return (
-    <Router>
-      <div className='app'>
-        <Sidebar />
-        <div className="app-column">
-          <Topbar />
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/new-ticket' element={<TicketScreen />} />
-          </Routes>  
+    <AppContext.Provider value={{ user, setUser, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal }}>
+      <Router>
+        <div className='app'>
+          <Sidebar />
+          <div className="app-column">
+            <Topbar />
+            <Routes>
+              <Route path='/' element={<Dashboard />} />
+              {/* <Route path='/new-ticket' element={<TicketScreen />} /> */}
+              <Route path='/new-ticket' element={<TicketInfo />} />
+            </Routes>
+          </div>
+          {/* <LoginModal /> */}
+          {/* <SignupModal /> */}
         </div>
-        {/* <LoginModal /> */}
-        {/* <SignupModal /> */}
-      </div>
-    </Router>
+      </Router>
+    </AppContext.Provider>
   )
 }
 

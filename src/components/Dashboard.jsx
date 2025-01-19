@@ -91,9 +91,21 @@ export default function () {
         </div>
 
         <div className="dashboard-pagnition">
-          <button className="dashboard-pagnition__button">Previous</button>
+          <button className="dashboard-pagnition__button"
+            onClick={() => {
+              if (page > 1) {
+                setPage(page - 1)
+              }
+            }}
+          >
+            Previous
+          </button>
           <span className="dashboard-pagnition__page">Page {page}</span>
-          <button className="dashboard-pagnition__button">Next</button>
+          <button className="dashboard-pagnition__button"
+            onClick={() => {setPage(page + 1)}} 
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
