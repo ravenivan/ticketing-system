@@ -7,19 +7,19 @@ import NewTickets from '../assets/dashboard/new-tickets.svg'
 import OngoingTickets from '../assets/dashboard/ongoing-tickets.svg'
 import ResolvedTickets from '../assets/dashboard/resolved-tickets.svg'
 import TicketCard from './ui/TicketCard'
-import { fetchTickets, resetPagnitionState } from '../firestoreServices'
+import { fetchTickets } from '../firestoreServices'
 import { Link } from 'react-router-dom'
 
 export default function () {
 
   const [tickets, setTickets] = useState([]);
-  const [pageSize, setPageSize] = useState(3);
+  const [displayedTickets, setDisplayedTickets] = useState([]);
   const [page, setPage] = useState(1);
 
   const loadTickets = async () => {
     try {
-      const fetchedTickets = await fetchTickets(pageSize);
-      console.log(fetchedTickets)
+      const fetchedTickets = await fetchTickets();
+      console.log(fetchedTickets[0])
       setTickets(fetchedTickets);
 
     } catch (error) {
@@ -29,16 +29,13 @@ export default function () {
 
   useEffect(() => {
     loadTickets();
-    console.log(Array.isArray(tickets))
-  }, [page])
+  }, [])
 
-  useEffect(() => {
-    resetPagnitionState();
-  }, [location.pathname])
-
-  useEffect(() => {
-    console.log(tickets)
-  }, [tickets])
+  useEffect(() => { 
+    if (tickets.length > 0) {
+      setDisplayedTickets(tickets[page - 1])
+    }
+  }, [page, tickets])
 
   return (
     <div className="dashboard">
@@ -79,8 +76,8 @@ export default function () {
         </div>
 
         <div className="dashboard-tickets">
-          {tickets.length > 0 ? (
-            tickets.map((ticket) => (
+          {displayedTickets !== undefined && displayedTickets.length > 0 ? (
+            displayedTickets.map((ticket) => (
               <TicketCard key={ticket.id} ticket={ticket} />
             ))
           ) : (
@@ -102,7 +99,11 @@ export default function () {
           </button>
           <span className="dashboard-pagnition__page">Page {page}</span>
           <button className="dashboard-pagnition__button"
-            onClick={() => {setPage(page + 1)}} 
+            onClick={() => {
+              if (page < tickets.length) {
+                setPage(page + 1)
+              }
+            }} 
           >
             Next
           </button>
