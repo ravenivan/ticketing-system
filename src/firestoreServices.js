@@ -35,6 +35,7 @@ export const fetchTickets = async () => {
   }
 }
 
+
 // export const fetchTickets = async (pageSize) => {
 //   try {
 //     let q = query(collection(db, "tickets"), orderBy('createdAt', 'desc'), limit(pageSize));

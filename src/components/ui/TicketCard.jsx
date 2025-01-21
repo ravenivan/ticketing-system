@@ -1,5 +1,6 @@
 import React from 'react'
 import Profile from '../../assets/topbar/profile.jpg'
+import { Link } from 'react-router-dom';
 
 export default function ({ ticket }) {
 
@@ -34,7 +35,9 @@ export default function ({ ticket }) {
           <img src={Profile} alt="" className="ticket-user-profile" />
           <h4 className="ticket-user-name">Guest 2</h4>
         </div>
-        <div className="ticket-open">Open Ticket</div>
+        <Link to={`/${ticket.id}`} className='ticket-open'>
+          Open Ticket
+        </Link>
       </div>
     </div>
   )

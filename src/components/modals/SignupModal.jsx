@@ -1,30 +1,36 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import SignupIcon from '../../assets/signup/signup-icon.svg'
 import XButton from '../../assets/login/x-button.svg'
+import { AppContext } from '../../AppContext'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import toast, { Toaster } from 'react-hot-toast'
+import { auth } from '../../firebase'
 
 export default function SignupModal() {
 
-  const [name, setName] = useState('')
+  const { setUser, setShowSignupModal, setShowLoginModal } = useContext(AppContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const authCreateAccountWithEmail = () => {
+  const createUser = () => {
     console.log("Sign up with email and password")
-    const email = emailInputEl.value
-    const password = passwordInputEl.value
-    console.log(email)
     createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user)
-        })
-        .catch((error) => {
-            console.error(error)
-        });
-}
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user)
+        toast.success('Account created successfully')
+        setUser(user)
+      })
+      .catch((error) => {
+        console.error(error)
+        toast.error('Error creating account')
+      });
+  }
 
   return (
     <div className='signupModal-screen'>
+      <Toaster />
       <div className="signupModal">
         <div className="signupModal__icon-wrapper">
           <img src={SignupIcon} alt="" className="signupModal__icon" />
@@ -36,28 +42,33 @@ export default function SignupModal() {
         </div>
 
         <div className="signupModal__form">
-          {/* <div className="signupModal__input">
-            <h4 className="signupModal__input__title">Name*</h4>
-            <input type="text" className="signupModal__input__field" placeholder='Name' 
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div> */}
           <div className="signupModal__input">
-            <h4 className="signupModal__input__title">Email*</h4>
-            <input type="email" className="signupModal__input__field" placeholder='Email' 
+            <h4 className="signupModal__input__title">Email<span className='signupModal__input__title-star'>*</span></h4>
+            <input type="email" className="signupModal__input__field" placeholder='Email'
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="signupModal__input">
-            <h4 className="signupModal__input__title">Password*</h4>
-            <input type="password" className="signupModal__input__field" placeholder='Create a password' 
+            <h4 className="signupModal__input__title">Password<span className='signupModal__input__title-star'>*</span></h4>
+            <input type="password" className="signupModal__input__field" placeholder='Create a password'
               onChange={(e) => setPassword(e.target.value)}
             />
             <h5 className="signupModal__input__password-req">Must be at least 8 characters</h5>
           </div>
         </div>
 
-        <button className="signupModal__button-confirm">Confirm</button>
+        <h5 className="signupModal__login">
+          Already have an account? <span className="signupModal__login-button" onClick={() => {
+            setShowSignupModal(false)
+            setShowLoginModal(true)
+          }}>Log in</span>
+        </h5>
+
+        <button className="signupModal__button-confirm"
+          onClick={createUser}
+        >
+          Confirm
+        </button>
         <button className="signupModal__button-cancel">Cancel</button>
 
         <div className="signupModal__x-button-wrapper">

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -11,12 +11,27 @@ import LoginModal from './components/modals/LoginModal'
 import SignupModal from './components/modals/SignupModal'
 import { AppContext } from './AppContext'
 import TicketInfo from './components/TicketInfo'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './firebase'
 
 function App() {
 
   const [user, setUser] = useState(null)
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showSignupModal, setShowSignupModal] = useState(false)
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user)
+        setShowLoginModal(false)
+        setShowSignupModal(false)
+      } else {
+        setUser(null)
+        setShowLoginModal(true)
+      }
+    })
+  }, []) 
 
   return (
     <AppContext.Provider value={{ user, setUser, showLoginModal, setShowLoginModal, showSignupModal, setShowSignupModal }}>
@@ -27,12 +42,12 @@ function App() {
             <Topbar />
             <Routes>
               <Route path='/' element={<Dashboard />} />
-              {/* <Route path='/new-ticket' element={<TicketScreen />} /> */}
-              <Route path='/new-ticket' element={<TicketInfo />} />
+              <Route path='/new-ticket' element={<TicketScreen />} />
+              <Route path='/:id' element={<TicketInfo />} />
             </Routes>
           </div>
-          {/* <LoginModal /> */}
-          {/* <SignupModal /> */}
+          { showLoginModal && <LoginModal /> }
+          { showSignupModal && <SignupModal /> }
         </div>
       </Router>
     </AppContext.Provider>
