@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import NewTicket from '../assets/dashboard/new-ticket.svg'
 import AllTickets from '../assets/dashboard/all-tickets.svg'
+import AllTicketsTheme from '../assets/dashboard/all-tickets-theme.svg'
 import NewTickets from '../assets/dashboard/new-tickets.svg'
+import NewTicketsTheme from '../assets/dashboard/new-tickets-theme.svg'
 import OngoingTickets from '../assets/dashboard/ongoing-tickets.svg'
+import OngoingTicketsTheme from '../assets/dashboard/ongoing-tickets-theme.svg'
 import ResolvedTickets from '../assets/dashboard/resolved-tickets.svg'
+import ResolvedTicketsTheme from '../assets/dashboard/resolved-tickets-theme.svg'
 import TicketCard from './ui/TicketCard'
 import { fetchTickets } from '../firestoreServices'
 import { Link } from 'react-router-dom'
@@ -30,29 +34,57 @@ export default function () {
   }
 
   const chooseTickets = async () => {
+    let filteredTic = []
+
     if (section === 'new') {
-      const newTickets = tickets.filter((ticket) => ticket.status === 'New');
-      setFilteredTickets(newTickets);
+      filteredTic = tickets.filter((ticket) => ticket.status === 'New');
+      // setFilteredTickets(newTickets);
     } else if (section === 'ongoing') {
-      const ongoingTickets = tickets.filter((ticket) => ticket.status === 'Ongoing');
-      setFilteredTickets(ongoingTickets);
+      filteredTic = tickets.filter((ticket) => ticket.status === 'Ongoing');
+      // setFilteredTickets(ongoingTickets);
     } else if (section === 'resolved') {
-      const resolvedTickets = tickets.filter((ticket) => ticket.status === 'Resolved');
-      setFilteredTickets(resolvedTickets);
+      filteredTic = tickets.filter((ticket) => ticket.status === 'Resolved');
+      // setFilteredTickets(resolvedTickets);
     } else {
-      setFilteredTickets(tickets);
+      filteredTic = tickets;
+      // setFilteredTickets(tickets);
     }
+
+    let returnedTickets = []
+    let ticketsGroup = []
+
+    filteredTic.forEach((ticket) => {
+      ticketsGroup.push(ticket)
+
+      if (ticketsGroup.length === 3) {
+        returnedTickets.push(ticketsGroup)
+        ticketsGroup = []
+      }
+    })
+
+    if (ticketsGroup.length > 0) {
+      returnedTickets.push(ticketsGroup)
+    }
+
+    console.log(returnedTickets)
+
+    setFilteredTickets(returnedTickets)
   }
 
   useEffect(() => {
     loadTickets();
   }, [])
 
-  useEffect(() => { 
+  useEffect(() => {
     if (tickets.length > 0) {
-      setDisplayedTickets(tickets[page - 1])
+      chooseTickets();
+      setPage(1)
     }
-  }, [page, tickets])
+  }, [tickets, section])
+
+  useEffect(() => { 
+    setDisplayedTickets(filteredTickets[page - 1])
+  }, [page, filteredTickets])
 
   return (
     <div className="dashboard">
@@ -74,21 +106,21 @@ export default function () {
         </div>
 
         <div className='dashboard-options'>
-          <div className="dashboard-option">
-            <img src={AllTickets} alt="" className="dasboard-option-img" />
-            <span className="dashboard-option-text">All Tickets</span>
+          <div className="dashboard-option" onClick={() => setSection('all')}>
+            <img src={section === "all" ? AllTicketsTheme : AllTickets} alt="" className="dashboard-option-img" />
+            <span className={`dashboard-option-text ${section === "all" && 'theme-text'}`}>All Tickets</span>
           </div>
-          <div className="dashboard-option">
-            <img src={NewTickets} alt="" className="dasboard-option-img" />
-            <span className="dashboard-option-text">New Tickets</span>
+          <div className="dashboard-option theme-border" onClick={() => setSection('new')}>
+            <img src={section === "new" ? NewTicketsTheme : NewTickets} alt="" className="dasboard-option-img" />
+            <span className={`dashboard-option-text ${section === "new" && 'theme-text'}`}>New Tickets</span>
           </div>
-          <div className="dashboard-option">
-            <img src={OngoingTickets} alt="" className="dasboard-option-img" />
-            <span className="dashboard-option-text">Ongoing Tickets</span>
+          <div className="dashboard-option" onClick={() => setSection('ongoing')}>
+            <img src={section === "ongoing" ? OngoingTicketsTheme : OngoingTickets} alt="" className="dasboard-option-img" />
+            <span className={`dashboard-option-text ${section === "ongoing" && 'theme-text'}`}>Ongoing Tickets</span>
           </div>
-          <div className="dashboard-option">
-            <img src={ResolvedTickets} alt="" className="dasboard-option-img" />
-            <span className="dashboard-option-text">Resolved Tickets</span>
+          <div className="dashboard-option" onClick={() => setSection('resolved')}>
+            <img src={section === "resolved" ? ResolvedTicketsTheme : ResolvedTickets} alt="" className="dasboard-option-img" />
+            <span className={`dashboard-option-text ${section === "resolved" && 'theme-text'}`}>Resolved Tickets</span>
           </div>
         </div>
 
@@ -117,7 +149,7 @@ export default function () {
           <span className="dashboard-pagnition__page">Page {page}</span>
           <button className="dashboard-pagnition__button"
             onClick={() => {
-              if (page < tickets.length) {
+              if (page < filteredTickets.length) {
                 setPage(page + 1)
               }
             }} 

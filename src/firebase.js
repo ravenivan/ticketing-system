@@ -13,6 +13,12 @@ const firebaseConfig = {
   storageBucket: "tech-ticket-system.firebasestorage.app",
   messagingSenderId: "1070955646513",
   appId: "1:1070955646513:web:01e9f93b15194237e38f10"
+  // apiKey: import.meta.env.VITE_API_KEY,
+  // authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  // projectId: import.meta.env.VITE_PROJECT_ID,
+  // storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  // messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  // appId: import.meta.env.VITE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

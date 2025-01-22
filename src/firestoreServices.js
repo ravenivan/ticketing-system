@@ -7,25 +7,32 @@ export const fetchTickets = async () => {
     let q = query(collection(db, "tickets"), orderBy('createdAt', 'desc'));
 
     const querySnapshot = await getDocs(q)
-
-    let ticketsGroup = []    
-    const tickets = []
+  
+    let tickets = []
 
     querySnapshot.forEach((doc) => {
-      ticketsGroup.push({ id: doc.id, ...doc.data() })
+      tickets.push({ id: doc.id, ...doc.data() })
 
-      if (ticketsGroup.length === 3) {
-        tickets.push(ticketsGroup)
-        ticketsGroup = []
-      }
     })
 
-    if (ticketsGroup.length > 0) {
-      console.log(ticketsGroup)
-      tickets.push(ticketsGroup)
-    }
+    // let ticketsGroup = []    
+    // const tickets = []
 
-    console.log(tickets)
+    // querySnapshot.forEach((doc) => {
+    //   ticketsGroup.push({ id: doc.id, ...doc.data() })
+
+    //   if (ticketsGroup.length === 3) {
+    //     tickets.push(ticketsGroup)
+    //     ticketsGroup = []
+    //   }
+    // })
+
+    // if (ticketsGroup.length > 0) {
+    //   console.log(ticketsGroup)
+    //   tickets.push(ticketsGroup)
+    // }
+    
+
 
     return tickets
 
