@@ -1,12 +1,14 @@
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { db } from '../firebase'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function () {
 
   const { id } = useParams()
   const [ticket, setTicket] = useState(null)
+  const [status, setStatus] = useState('')
 
   const fetchTicket = async (ticketId) => {
     try {
@@ -21,12 +23,32 @@ export default function () {
     }
   }
 
+  const updateTicket = async (status) => {
+    try {
+      const docRef = doc(db, "tickets", id)
+      // const newDoc = {...ticket, status: status}
+      // await updateDoc(docRef, newDoc)
+      await updateDoc(docRef, {status: status})
+      toast.success("Ticket updated successfully")
+      console.log("Document updated with ID: ", docRef.id);
+    } catch (error) {
+      toast.error("Error updating ticket", error)
+    }
+  }
+
+  useEffect(() => {
+    if (ticket) {
+      setStatus(ticket.status)
+    }
+  }, [ticket])
+
   useEffect(() => {
     fetchTicket(id)
   }, [])
 
   return (
     <div className='ticketInfo-screen'>
+      <Toaster />
       <h1 className="ticketInfo__title">Ticket Info</h1>
 
       {
@@ -34,8 +56,28 @@ export default function () {
           <div className="ticketInfo-card">
 
             <div className="ticketInfo-heading">
-              <div className="ticket-condition"></div>
+              {
+                status === 'New' ? (
+                  <div className="ticket-condition-new"></div>
+                ) : status === 'Ongoing' ? (
+                  <div className="ticket-condition-ongoing"></div>
+                ) : status === 'Resolved' ? (
+                  <div className="ticket-condition-resolved"></div>
+                ) : null
+              }
               <h4 className="ticketInfo-id">Ticket# {id}</h4>
+
+              <select 
+                value={status} className="ticketInfo__status"
+                onChange={(e) => {
+                  setStatus(e.target.value)
+                  updateTicket(e.target.value)
+                }}  
+              >
+                <option value="New">New Ticket</option>
+                <option value="Ongoing">Ongoing Ticket</option>
+                <option value="Resolved">Resolved Ticket</option>
+              </select>
             </div>
 
             <div className="ticketInfo-inputs">
@@ -87,6 +129,7 @@ export default function () {
             <div className="ticketInfo__description-container">
               <h5 className="ticketInfo__description-title">Ticket Body</h5>
               <p className="ticketInfo__description">{ticket.description}</p>
+        
             </div>
 
             <div className="ticketInfo-replyCard">
@@ -94,11 +137,10 @@ export default function () {
               <div className="ticketInfo-replyCard__infos">
                 <div className="ticketInfo-replyCard__info-container">
                   <h4 className="ticketInfo-replyCard__info__title">Customer Email</h4>
-                  <input className="ticketInfo-replyCard__info__input" />
-                </div>
-                <div className="ticketInfo-replyCard__info-container">
-                  <h4 className="ticketInfo-replyCard__info__title">Status</h4>
-                  <input className="ticketInfo-replyCard__info__input" />
+                  <input 
+                    className="ticketInfo-replyCard__info__input" 
+                    defaultValue={ticket.email}  
+                  />
                 </div>
               </div>
 

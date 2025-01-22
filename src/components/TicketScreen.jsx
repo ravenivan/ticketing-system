@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from '../firebase';
 import toast, { Toaster } from 'react-hot-toast';
 import { use } from 'react';
+import { AppContext } from '../AppContext';
 
 export default function TicketScreen() {
+
+  const { user } = useContext(AppContext)
 
   const [formData, setFormData] = useState({
     mainCategory: 'Default',
@@ -14,6 +17,8 @@ export default function TicketScreen() {
     numbersAffected: '',
     dateNoticed: '',
     description: '',
+    email: user?.email,
+    status: "New",
     createdAt: serverTimestamp()
   })
 

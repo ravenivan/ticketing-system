@@ -13,6 +13,8 @@ import { Link } from 'react-router-dom'
 export default function () {
 
   const [tickets, setTickets] = useState([]);
+  const [section, setSection] = useState('all');
+  const [filteredTickets, setFilteredTickets] = useState([]);
   const [displayedTickets, setDisplayedTickets] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -24,6 +26,21 @@ export default function () {
 
     } catch (error) {
       console.error("Error fetching tickets", error)
+    }
+  }
+
+  const chooseTickets = async () => {
+    if (section === 'new') {
+      const newTickets = tickets.filter((ticket) => ticket.status === 'New');
+      setFilteredTickets(newTickets);
+    } else if (section === 'ongoing') {
+      const ongoingTickets = tickets.filter((ticket) => ticket.status === 'Ongoing');
+      setFilteredTickets(ongoingTickets);
+    } else if (section === 'resolved') {
+      const resolvedTickets = tickets.filter((ticket) => ticket.status === 'Resolved');
+      setFilteredTickets(resolvedTickets);
+    } else {
+      setFilteredTickets(tickets);
     }
   }
 

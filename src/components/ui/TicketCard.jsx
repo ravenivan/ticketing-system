@@ -19,7 +19,15 @@ export default function ({ ticket }) {
     <div className='ticket'>
       <div className="ticket-header">
         <div className="ticket-info">
-          <div className="ticket-condition"></div>
+          {
+            ticket.status === 'New' ? (
+              <div className="ticket-condition-new"></div>
+            ) : ticket.status === 'Ongoing' ? (
+              <div className="ticket-condition-ongoing"></div>
+            ) : ticket.status === 'Resolved' ? (
+              <div className="ticket-condition-resolved"></div>
+            ) : null
+          }
           <div className="ticket-info-text">Ticket #{ticket.id}</div>
         </div>
         <span className="ticket-date">Posted {formattedDate} </span>
@@ -33,7 +41,7 @@ export default function ({ ticket }) {
       <div className="ticket-user-info">
         <div className="ticket-user">
           <img src={Profile} alt="" className="ticket-user-profile" />
-          <h4 className="ticket-user-name">Guest 2</h4>
+          <h4 className="ticket-user-name">{ticket.email ? ticket.email : "Guest"}</h4>
         </div>
         <Link to={`/${ticket.id}`} className='ticket-open'>
           Open Ticket

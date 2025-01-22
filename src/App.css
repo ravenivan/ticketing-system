@@ -300,11 +300,25 @@ body {
     gap: 16px;
 }
 
-.ticket-condition {
+.ticket-condition-new {
     width: 22px;
     height: 22px;
     border-radius: 999px;
-    background-color: var(--theme-color);
+    background-color: #3B8AFF;
+}
+
+.ticket-condition-ongoing {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background-color: #FAC885;
+}
+
+.ticket-condition-resolved {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background-color: #54C104;
 }
 
 .ticket-info-text {
@@ -795,6 +809,20 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.ticketInfo-status {
+    margin-left: auto;
+}
+
+.ticketInfo__status {
+    color: var(--gray-text);
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: auto;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #E7E7E7;
 }
 
 .ticketInfo-id {
