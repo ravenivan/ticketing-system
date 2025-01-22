@@ -27,7 +27,7 @@ export default function TicketScreen() {
   }
 
   useEffect(() => {
-    console.log(formData.dateNoticed) 
+    console.log(formData.dateNoticed)
   }, [formData.dateNoticed])
 
   async function createTicket() {
@@ -43,11 +43,27 @@ export default function TicketScreen() {
       const docRef = await addDoc(collection(db, "tickets"), formData);
       console.log("Document written with ID: ", docRef.id);
       toast.success("Ticket created successfully");
+      setFormData({
+        mainCategory: 'Default',
+        affected: 'Default',
+        privilege: 'Default',
+        roomNumber: '',
+        numbersAffected: '',
+        dateNoticed: '',
+        description: '',
+        email: user?.email,
+        status: "New",
+        createdAt: serverTimestamp()
+      })
     } catch (e) {
       console.error("Error adding document: ", e);
       toast.error("Error creating ticket", e);
     }
   }
+
+  useEffect(() => {
+    console.log(user)
+  }, [user])
 
   return (
     <div className="newTicket-screen">
@@ -114,6 +130,7 @@ export default function TicketScreen() {
               placeholder='Enter room number'
               type="text"
               className="newTicket-input-field"
+              value={formData.roomNumber}
               onChange={(e) => handleChange('roomNumber', e.target.value)}
             />
           </div>
@@ -124,6 +141,7 @@ export default function TicketScreen() {
               placeholder='Enter numbers affected (N/A if none)'
               type="text"
               className="newTicket-input-field"
+              value={formData.numbersAffected}
               onChange={(e) => handleChange('numbersAffected', e.target.value)}
             />
           </div>
@@ -134,6 +152,7 @@ export default function TicketScreen() {
               placeholder='MM - DD - YY'
               type="date"
               className="newTicket-input-field"
+              value={formData.dateNoticed}
               onChange={(e) => handleChange('dateNoticed', e.target.value)}
             />
           </div>
@@ -144,6 +163,7 @@ export default function TicketScreen() {
           <textarea
             placeholder="Describe the issue and what you've tried" name="body"
             className="newTicket-description-field"
+            value={formData.description}
             onChange={(e) => handleChange('description', e.target.value)}
           ></textarea>
         </div>
