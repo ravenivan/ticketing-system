@@ -1,14 +1,19 @@
 import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { db } from '../firebase'
 import toast, { Toaster } from 'react-hot-toast'
+import { AppContext } from '../AppContext'
 
 export default function () {
+
+  const { user } = useContext(AppContext)
 
   const { id } = useParams()
   const [ticket, setTicket] = useState(null)
   const [status, setStatus] = useState('')
+  const [bodyMessage, setBodyMessage] = useState('')
+
 
   const fetchTicket = async (ticketId) => {
     try {
@@ -34,6 +39,16 @@ export default function () {
     } catch (error) {
       toast.error("Error updating ticket", error)
     }
+  }
+
+  const handleEmail = () => {
+    const recipient = ticket.email
+    const subject = `Message from ${user.email}`
+    const body = bodyMessage
+
+    const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoLink;
   }
 
   useEffect(() => {
@@ -146,10 +161,13 @@ export default function () {
 
               <div className="ticketInfo-replyCard__message-container">
                 <h4 className="ticketInfo-replyCard__message__title">Message</h4>
-                <textarea className="ticketInfo-replyCard__message__input" />
+                <textarea 
+                  className="ticketInfo-replyCard__message__input" 
+                  onChange={(e) => setBodyMessage(e.target.value)}
+                />
               </div>
 
-              <button className="ticketInfo-submit" onClick={() => createTicket()}>
+              <button className="ticketInfo-submit" onClick={() => handleEmail()}>
                 Submit Reply
               </button>
             </div>
