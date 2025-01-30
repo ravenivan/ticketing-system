@@ -15,25 +15,6 @@ export const fetchTickets = async () => {
 
     })
 
-    // let ticketsGroup = []    
-    // const tickets = []
-
-    // querySnapshot.forEach((doc) => {
-    //   ticketsGroup.push({ id: doc.id, ...doc.data() })
-
-    //   if (ticketsGroup.length === 3) {
-    //     tickets.push(ticketsGroup)
-    //     ticketsGroup = []
-    //   }
-    // })
-
-    // if (ticketsGroup.length > 0) {
-    //   console.log(ticketsGroup)
-    //   tickets.push(ticketsGroup)
-    // }
-    
-
-
     return tickets
 
   } catch(error) {

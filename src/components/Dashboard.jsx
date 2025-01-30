@@ -25,7 +25,6 @@ export default function () {
   const loadTickets = async () => {
     try {
       const fetchedTickets = await fetchTickets();
-      console.log(fetchedTickets[0])
       setTickets(fetchedTickets);
 
     } catch (error) {
@@ -65,8 +64,6 @@ export default function () {
     if (ticketsGroup.length > 0) {
       returnedTickets.push(ticketsGroup)
     }
-
-    console.log(returnedTickets)
 
     setFilteredTickets(returnedTickets)
   }

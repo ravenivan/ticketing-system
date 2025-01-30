@@ -17,16 +17,15 @@ export default function () {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user)
         toast.success('Logged in successfully')
-        // setTimeout(() => {
+
         setUser(user)
-        // }, 2000)
+
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage)
+
         toast.error('Error logging in')
       });
   }

@@ -26,22 +26,14 @@ export default function TicketScreen() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
-  useEffect(() => {
-    console.log(formData.dateNoticed)
-  }, [formData.dateNoticed])
-
   async function createTicket() {
-
-    console.log('asd')
 
     if (formData.mainCategory === 'Default' || formData.affected === 'Default' || formData.privilege === 'Default' || formData.roomNumber === '' || formData.numbersAffected === '' || formData.dateNoticed === '' || formData.description === '') {
       toast.error('Error creating ticket (fill out all fields)');
-      console.log("asd")
       return;
     }
     try {
       const docRef = await addDoc(collection(db, "tickets"), formData);
-      console.log("Document written with ID: ", docRef.id);
       toast.success("Ticket created successfully");
       setFormData({
         mainCategory: 'Default',
@@ -60,10 +52,6 @@ export default function TicketScreen() {
       toast.error("Error creating ticket", e);
     }
   }
-
-  useEffect(() => {
-    console.log(user)
-  }, [user])
 
   return (
     <div className="newTicket-screen">

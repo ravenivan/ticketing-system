@@ -14,11 +14,11 @@ export default function SignupModal() {
   const [password, setPassword] = useState('')
 
   const createUser = () => {
-    console.log("Sign up with email and password")
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user)
+
         toast.success('Account created successfully')
         setUser(user)
       })

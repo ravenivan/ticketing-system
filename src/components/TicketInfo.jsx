@@ -35,7 +35,6 @@ export default function () {
       // await updateDoc(docRef, newDoc)
       await updateDoc(docRef, {status: status})
       toast.success("Ticket updated successfully")
-      console.log("Document updated with ID: ", docRef.id);
     } catch (error) {
       toast.error("Error updating ticket", error)
     }

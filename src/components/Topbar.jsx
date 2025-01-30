@@ -23,10 +23,6 @@ export default function
     }, 2000)
   }
 
-  useEffect(() => {
-    console.log(isOpen)
-  }, [isOpen])
-
   return (
     <div className='topbar'>
       <Toaster />
